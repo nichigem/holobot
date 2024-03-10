@@ -1,3 +1,4 @@
+
 # website that you wanna spam
 imgboard = 'https://thefrogpond.org'
 
@@ -18,3 +19,6 @@ headless = True
 
 # spam reply and bump random threads
 randthreads = False
+
+# your image
+image = 'mytransbianass.png'
