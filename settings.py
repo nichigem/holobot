@@ -1,4 +1,3 @@
-
 # website that you wanna spam
 imgboard = 'https://thefrogpond.org'
 
@@ -15,7 +14,6 @@ postcount = 300
 javascript = False
 
 # headless on or off
-
 headless = True
 
 # spam reply and bump random threads
