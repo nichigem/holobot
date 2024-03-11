@@ -32,22 +32,33 @@ def post(threadnum):
                 context = chrome.new_context(java_script_enabled=javascript, no_viewport=True, user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A')
                 page = context.new_page()
                 stealth_sync(page)
+                # no image
                 page.route("**/*", lambda route: route.abort() 
                     if route.request.resource_type == "image" 
                     else route.continue_() 
                 ) 
-                if randthreads == True:
-                    page.goto(f'{imgboard}{choice(cattylinks)}')
-                else:
-                    page.goto(f'{imgboard}/{board}/index.html')
+                page.goto(f'{imgboard}{choice(cattylinks)}') if randthreads else page.goto(f'{imgboard}/{board}/index.html')
+
                 body = page.query_selector('textarea[name="body"]')
-                subimage = page.query_selector('input[type="file"]')
                 submit = page.query_selector('input[type="submit"]')
                 text(body)
-                subimage.set_input_files(image) #images\{str(randint(1,3000))}.png
+
+                if javascript: # put this in function
+                    try: # if js is on but site uses html file input
+                        subimage = page.query_selector('input[type="file"]')
+                        subimage.set_input_files(image) #images\{str(randint(1,3000))}.png
+                    except:
+                        with page.expect_file_chooser() as fc_info:
+                            page.get_by_text('Select/drop/paste files here').click()
+                            file_chooser = fc_info.value
+                            file_chooser.set_files(image)
+                else:
+                    subimage = page.query_selector('input[type="file"]')
+                    subimage.set_input_files(image) #images\{str(randint(1,3000))}.png
+
                 page.screenshot(path=fr'during\image-{threadnum}.png')
                 submit.click()
-                try: # nojs only i think
+                try:
                     error = page.query_selector('h2')
                     print(f"Post has failed, \"{error.text_content()}\" Thread-{threadnum}") 
                     chrome.close()
@@ -58,7 +69,7 @@ def post(threadnum):
             except:
                 page.screenshot(path=fr'results-fail\fail-{threadnum}.png')
                 chrome.close()
-                print(f'Failed, attempting again {threadnum}')
+                print(f'Failed, attempting again. Thread-{threadnum}')
 
 
 def randomthreads():
