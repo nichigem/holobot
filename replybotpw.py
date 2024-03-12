@@ -44,14 +44,15 @@ def post(threadnum):
                 text(body)
 
                 if javascript: # put this in function
-                    try: # if js is on but site uses html file input
-                        subimage = page.query_selector('input[type="file"]')
-                        subimage.set_input_files(image) #images\{str(randint(1,3000))}.png
-                    except:
+                    try: 
                         with page.expect_file_chooser() as fc_info:
                             page.get_by_text('Select/drop/paste files here').click()
                             file_chooser = fc_info.value
                             file_chooser.set_files(image)
+                    except: # if js is on but site uses html file input
+                        subimage = page.query_selector('input[type="file"]')
+                        subimage.set_input_files(image) #images\{str(randint(1,3000))}.png
+
                 else:
                     subimage = page.query_selector('input[type="file"]')
                     subimage.set_input_files(image) #images\{str(randint(1,3000))}.png
@@ -79,6 +80,12 @@ def randomthreads():
         context = browser.new_context(user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/7046A194A')
         page = context.new_page()
         stealth_sync(page)
+        # no image
+        page.route("**/*", lambda route: route.abort() 
+            if route.request.resource_type == "image" 
+            else route.continue_() 
+        ) 
+
         page.goto(f'{imgboard}/{board}/catalog.html')
 
         if 'soyjak.party' in imgboard.lower():
@@ -91,8 +98,7 @@ def randomthreads():
             cattylinks.append(href)
 
 
-if randthreads == True:
-    randomthreads()
+if randthreads: randomthreads()
 
 # threading
 
