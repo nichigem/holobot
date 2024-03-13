@@ -14,6 +14,7 @@ cattylinks = []
 r = RandomWords()
 l = string.ascii_letters+string.digits
 # {r.get_random_word()} for a random word
+
 def text(body):
     body.fill(f'''my transbian ass:
 {r.get_random_word()}
@@ -22,7 +23,6 @@ def text(body):
 {choice(l)}
 {choice(l)}
 ''')
-
 
 def post(threadnum):
     for i in range(math.ceil(postcount/count)):
@@ -37,8 +37,8 @@ def post(threadnum):
                     if route.request.resource_type == "image" 
                     else route.continue_() 
                 ) 
+                
                 page.goto(f'{imgboard}{choice(cattylinks)}') if randthreads else page.goto(f'{imgboard}/{board}/index.html')
-
                 body = page.query_selector('textarea[name="body"]')
                 submit = page.query_selector('input[type="submit"]')
                 text(body)
@@ -59,18 +59,29 @@ def post(threadnum):
 
                 page.screenshot(path=fr'during\image-{threadnum}.png')
                 submit.click()
-                try:
-                    error = page.query_selector('h2')
-                    print(f"Post has failed, \"{error.text_content()}\" Thread-{threadnum}") 
-                    chrome.close()
-                except:
-                    print(f'Post was succesful {threadnum}')
-                    page.screenshot(path=fr'results-pass\pass-{threadnum}.png')
-                    chrome.close()
+
+                if javascript:
+                    try:
+                        error = page.wait_for_selector('div[id="alert_message"]')
+                        print(f"Post has failed, \"{error.text_content()}\" Thread-{threadnum}")
+                        chrome.close()
+                    except:
+                        print(f'Post was succesful {threadnum}')
+                        page.screenshot(path=fr'results-pass\pass-{threadnum}.png')
+                        chrome.close()
+                else:
+                    try:
+                        error = page.query_selector('h2')
+                        print(f"Post has failed, \"{error.text_content()}\" Thread-{threadnum}") 
+                        chrome.close()
+                    except:
+                        print(f'Post was succesful {threadnum}')
+                        page.screenshot(path=fr'results-pass\pass-{threadnum}.png')
+                        chrome.close()
             except:
                 page.screenshot(path=fr'results-fail\fail-{threadnum}.png')
                 chrome.close()
-                print(f'Failed, attempting again. Thread-{threadnum}')
+                print(f'Failed, attempting again., \"{Exception}\" Thread-{threadnum}')
 
 
 def randomthreads():
