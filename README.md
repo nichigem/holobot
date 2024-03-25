@@ -1,5 +1,6 @@
 ```
 pip install playwright playwright-stealth random-word
+playwright install
 ```
 
 change text and image in ```replybotpw.py```, make sure image is in same directory
