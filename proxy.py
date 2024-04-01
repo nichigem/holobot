@@ -1,5 +1,5 @@
 proxyoptions = {
-  "server": "geo.iproyal.com:12321",
-  "username": "",
-  "password": ""
+  "server": "IP:PORT",
+  "username": "USERNAME",
+  "password": "PASSWORD"
 }
