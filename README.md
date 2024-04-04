@@ -3,7 +3,7 @@ pip install playwright playwright-stealth random-word
 playwright install
 ```
 
-change text and image in `replybotpw.py`, make sure image is in same directory
+change text in `replybotpw.py`, make sure image is in same directory
 
 make sure to put proxy details in `proxy.py`
 
