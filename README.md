@@ -4,7 +4,7 @@ playwright install
 ```
 
 # Holobot - A bot to post threads or replies on a vichan imageboard very quickly for fun reasons.
-# Written in playwright! - Undetected!
+# Written in playwright! - Undetected! <-- meds
 
 change text in `replybotpw.py`, make sure image is in same directory
 
