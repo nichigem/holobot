@@ -12,8 +12,6 @@ make sure to put proxy details in `proxy.py`
 
 it works fine default on vichan boards but on other software you may need to change the variables in `replybotpw.py`
 
-**made by members of the afterparty :)**
-
 happy spamming
 
 ## screenshots
